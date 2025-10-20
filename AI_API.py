@@ -5,15 +5,27 @@ import os
 def API(model,user_prompt,image_path=None):
     if(image_path is None):
         messages = [
+             
                 {
+                    "role": "system", 
+                    "content": [
+                         {"type": "text", "text": "you are a personalized assistant bot."}]
+                },
+                {   
                     "role": "user", 
                     "content": [
                         {"type": "text", "text": user_prompt}
                     ]
                 }
             ]
+    
     else:
         messages = [
+                {
+                    "role": "system", 
+                    "content": [
+                         {"type": "text", "text": "you are a personalized assistant bot that analyses user text and image for accurate answers"}]
+                },
                 {
                     "role": "user", 
                     "content": [
@@ -22,6 +34,7 @@ def API(model,user_prompt,image_path=None):
                     ]
                 }
             ]
+    
     
     if(model=="sonar"):
             client = OpenAI(api_key="Your-API-Key", base_url="https://api.perplexity.ai")
@@ -53,3 +66,4 @@ def API(model,user_prompt,image_path=None):
 
 if __name__ == "__main__":
     API("sonar-pro",input("Enter Prompt"))
+
