@@ -3,8 +3,10 @@ import discord
 import time 
 import discord.ext.commands as commands
 import asyncio
+from snap import images,randoms,webpage,close_browser
+import re
 
-discord_token = "YOUR_DISCORD_BOT_TOKEN_HERE"
+discord_token = "your_discord_bot_token_here"
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -22,9 +24,16 @@ async def on_message(message):
     await bot.process_commands(message)
 
 @bot.command()
-async def ask(ctx, *, user_prompt):
+async def ask(ctx,image_path, *, user_prompt):
     await ctx.send("Processing your request...")
-    response = asyncio.to_thread(API,"sonar-pro", user_prompt)
+    response = API("sonar", user_prompt, image_path)
+    output= "".join(re.findall(r"\*\*(.*?)\*\*", response))
+    print(output)
     await ctx.send(response)
 
+
+
+
 bot.run(discord_token)
+
+
